@@ -3,9 +3,11 @@ name: fade-onboarding
 description: >-
   Set a person up in Fade (tryfade.ai, AI video ads) end to end: connect the Fade MCP and sign in,
   pick or make the workspace for their brand, fill its Brand folder (website read, logos, product
-  photos, guidelines, old ads), label it, build and approve the brand kit, then make a first ad.
-  Use when someone says "set up Fade", "onboard me", "connect my brand to Fade", "add a new client
-  to Fade", or when Fade's tools answer with an empty workspace or an empty Brand folder.
+  photos, guidelines, old ads), label it, build and approve the brand kit, then show how to start
+  a first ad. Use when someone says "set up Fade", "onboard me", "connect my brand to Fade", "add a
+  new client to Fade", or when Fade's tools answer with an empty workspace or an empty Brand folder.
+kind: craft
+version: 4
 ---
 
 # Fade onboarding
@@ -14,6 +16,12 @@ Walk the person through setting up Fade one step at a time, the way a good agenc
 client: ask only what you cannot find out, show what Fade found, and stop when they want to stop.
 Every step is optional after step 2; a person can make an ad with an empty Brand folder, it is
 just less on-brand.
+
+Onboarding ends with the brand set up. It never starts an ad: it ends by showing the person how to
+start one themselves (step 8).
+
+The flow runs through the Fade MCP (the `fade_*` tools). If you are Fade's own agent, in a chat in
+the Fade app, read [Inside the Fade app](#inside-the-fade-app) first.
 
 **House rules for the whole flow**
 
@@ -38,7 +46,7 @@ Track progress with this checklist and show it when the person asks where they a
 - [ ] 5. Files labelled
 - [ ] 6. Brand kit built
 - [ ] 7. Kit approved
-- [ ] 8. First ad
+- [ ] 8. Ready for a first ad
 ```
 
 Before starting, find out where they are: if the Fade tools are connected, call `fade_whoami`,
@@ -66,9 +74,10 @@ reads it. An agency makes one workspace per client.
 1. `fade_workspace` (no arguments) lists their workspaces with the current one marked.
 2. Ask which brand this is for. If a workspace for it exists, switch:
    `fade_workspace {workspaceId}`.
-3. A new team workspace (a client, a company) is made on the web: send them to
-   https://app.tryfade.ai, workspace switcher → new workspace, then switch to it here. Their
-   personal workspace is fine for one brand of their own.
+3. A brand with no workspace yet (a client, a company) gets a new one:
+   `fade_workspace {newWorkspace: "<brand name>"}` makes it, owned by the person, and switches to
+   it. Say the name you will use before you make it. Their personal workspace is fine for one
+   brand of their own. (On the web: workspace switcher → new workspace.)
 4. Teammates are invited on the workspace's Members page:
    `https://app.tryfade.ai/<workspaceId>/members`. Offer it once; do not push.
 
@@ -165,17 +174,19 @@ its `sessionId`.
 The kit is **ready** when it has canon, look, voice, one product with its claims, and, for a
 regulated category (finance, health, people search, alcohol, gambling), its compliance rules.
 
-### 8. First ad
+### 8. Ready for a first ad
 
-Offer the two ways in:
+Onboarding never starts an ad, even when the person asks for one in the same message: do not call
+`fade_find_ads`, `fade_use_ad`, `fade_upload` or `fade_chat` to make one. Show them how to start
+it instead, with prompts they can send as they are, filled in with their brand and product, and
+say they can send one now:
 
-- **Remake a real ad**: `fade_find_ads {query}` searches Meta's Ad Library. Give the person the
-  `page` it returns and let them pick there; do not list ads in chat. Then `fade_get_pick`.
-- **From their own video or a link**: `fade_upload` it, then
-  `fade_chat {text, attachments}` with what they want made.
+- Remake a real ad: "Find <competitor or brand> ads on Meta and remake one for <product>".
+- From their own video: "Remake this video for <product>", with the file or a link to it.
+- From scratch: "Make a 15-second vertical ad for <product> that <goal>".
 
-Fade shows a storyboard and its price before anything costly runs. Approve with `fade_approve`
-only when the person says so, and quote the price exactly as Fade gives it.
+Tell them Fade shows a storyboard and its price before anything costly runs, and that nothing is
+paid until they approve it.
 
 ### Optional: their own Google key
 
@@ -183,8 +194,36 @@ only when the person says so, and quote the price exactly as Fade gives it.
 settings link. Mention it only if they ask about billing or limits. Send the link, never take the
 key in chat.
 
+## Inside the Fade app
+
+When this skill plays in a chat in the Fade app (app.tryfade.ai), you are Fade's own agent: you
+have no `fade_*` tools, and you **never change the Brand folder or the workspace**. Your part is to
+read and to guide:
+
+- Find out where the person is with `brand_folder` (what is in the folder, its labels, its
+  readings) and tick the checklist from that. Steps 1 and 2 are done: they are signed in, in this
+  workspace.
+- You cannot do any of these steps in this chat, so never offer to: no "I'll label them", no
+  "reply build the kit and I'll start it", no "once they're in, I'll …". For each open step, say
+  in one or two lines what the person does and where, then wait. Name each page as the app's
+  sidebar does: **Brand kit** (the Brand page), **Members**, **Settings**. Never write an address
+  with a placeholder in it, like `<workspace id>`.
+  - website read: the Brand page's From website field;
+  - files: drop them on the Brand page;
+  - labels, renames and deletes: on each file's row on the Brand page;
+  - teammates: the Members page; their own Google key: Settings;
+  - the kit: built in its own chat with the skill `brand-research`, not in this one. Not every
+    Brand page has a Build the kit button yet: say "if your Brand page shows Build the kit, press
+    it; otherwise ask your agent connected to the Fade MCP to build the kit (step 6)". Its drafts
+    are approved on the Brand page by clearing each draft's `draft (inferred)` note.
+- When they come back, read the folder again and say what changed and what is next.
+- End with step 8: the prompts to start an ad, not an ad.
+- Say your answer so it reaches the person: put it in `finish`'s `summary`, or answer with no
+  tool call at all. Text written beside a tool call in the same turn is not shown to them.
+
 ## Finishing
 
-End with the checklist, what is in the Brand folder, and the workspace link
-`https://app.tryfade.ai/<workspaceId>`. If they stopped early, say which step to pick up next
-time; this skill resumes from it.
+End with the checklist, what is in the Brand folder, the workspace link
+`https://app.tryfade.ai/<workspaceId>`, and step 8's prompts, even when onboarding stopped before
+the kit (an ad can be made with the folder as it is). If they stopped early, say which step to
+pick up next time; this skill resumes from it.
