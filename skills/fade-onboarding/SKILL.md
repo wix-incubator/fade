@@ -7,7 +7,7 @@ description: >-
   a first ad. Use when someone says "set up Fade", "onboard me", "connect my brand to Fade", "add a
   new client to Fade", or when Fade's tools answer with an empty workspace or an empty Brand folder.
 kind: craft
-version: 2
+version: 4
 ---
 
 # Fade onboarding
@@ -205,9 +205,9 @@ read and to guide:
   workspace.
 - You cannot do any of these steps in this chat, so never offer to: no "I'll label them", no
   "reply build the kit and I'll start it", no "once they're in, I'll …". For each open step, say
-  in one or two lines what the person does and where, then wait. The pages are under
-  `https://app.tryfade.ai/<workspace id>/` (`brand`, `members`, `settings`); name the full address
-  when you know the workspace id, else the page by name.
+  in one or two lines what the person does and where, then wait. Name each page as the app's
+  sidebar does: **Brand kit** (the Brand page), **Members**, **Settings**. Never write an address
+  with a placeholder in it, like `<workspace id>`.
   - website read: the Brand page's From website field;
   - files: drop them on the Brand page;
   - labels, renames and deletes: on each file's row on the Brand page;
@@ -218,6 +218,8 @@ read and to guide:
     are approved on the Brand page by clearing each draft's `draft (inferred)` note.
 - When they come back, read the folder again and say what changed and what is next.
 - End with step 8: the prompts to start an ad, not an ad.
+- Say your answer so it reaches the person: put it in `finish`'s `summary`, or answer with no
+  tool call at all. Text written beside a tool call in the same turn is not shown to them.
 
 ## Finishing
 
