@@ -4,6 +4,15 @@ Agent skills for [Fade](https://www.tryfade.ai), installable with the
 [`skills`](https://github.com/vercel-labs/skills) CLI into Claude Code, Codex, Cursor and
 other agents.
 
+The skills drive Fade through its MCP server (`https://mcp.tryfade.ai/mcp`, sign in with a Wix
+account); [connect.md](skills/fade-onboarding/references/connect.md) has the setup for each app.
+
+## Skills
+
+| Skill | What it does |
+| --- | --- |
+| [`fade-onboarding`](skills/fade-onboarding/SKILL.md) | Sets a person or a new client up in Fade end to end: connect the MCP and sign in, pick the brand's workspace, read its website and add its files to the Brand folder, label them, build and approve the brand kit, then make a first ad. Resumes from the first unfinished step. |
+
 ## Install
 
 ```bash
@@ -14,7 +23,7 @@ npx skills add wix-incubator/fade --list
 npx skills add wix-incubator/fade
 
 # or one, globally
-npx skills add wix-incubator/fade --skill <name> -g
+npx skills add wix-incubator/fade --skill fade-onboarding -g
 ```
 
 ## Layout
@@ -26,6 +35,7 @@ and `description`, then the instructions):
 skills/
   <skill-name>/
     SKILL.md
+    references/   # optional: longer material SKILL.md links to
 ```
 
 ## Adding a skill
@@ -34,4 +44,5 @@ skills/
 cd skills && npx skills init <skill-name>
 ```
 
-Then fill in `skills/<skill-name>/SKILL.md`. `name` must match the folder name.
+Then fill in `skills/<skill-name>/SKILL.md`. `name` must match the folder name,
+and add a row to the table above.
