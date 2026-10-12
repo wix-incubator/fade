@@ -11,7 +11,7 @@ account); [connect.md](skills/fade-onboarding/references/connect.md) has the set
 
 | Skill | What it does |
 | --- | --- |
-| [`fade-onboarding`](skills/fade-onboarding/SKILL.md) | Sets a person or a new client up in Fade end to end: connect the MCP and sign in, pick the brand's workspace, read its website and add its files to the Brand folder, label them, build and approve the brand kit, then make a first ad. Resumes from the first unfinished step. |
+| [`fade-onboarding`](skills/fade-onboarding/SKILL.md) | Sets a person or a new client up in Fade end to end: connect the MCP and sign in, pick the brand's workspace, read its website and add its files to the Brand folder, label them, build and approve the brand kit, then show how to start a first ad. Resumes from the first unfinished step. |
 
 ## Install
 
@@ -25,6 +25,17 @@ npx skills add wix-incubator/fade
 # or one, globally
 npx skills add wix-incubator/fade --skill fade-onboarding -g
 ```
+
+## Keep them up to date
+
+Fade changes, and so do these skills. Update from time to time:
+
+```bash
+npx skills update -g
+```
+
+`fade-onboarding` also checks for you: when Fade has a newer version than the one you installed,
+it tells you to run that command.
 
 ## Layout
 
@@ -46,3 +57,6 @@ cd skills && npx skills init <skill-name>
 
 Then fill in `skills/<skill-name>/SKILL.md`. `name` must match the folder name,
 and add a row to the table above.
+
+When you change a skill, raise `version` in its frontmatter, and in `fade-onboarding` the
+version named in its body too (the update check reads that one).
