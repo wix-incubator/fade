@@ -12,8 +12,8 @@ version: 6
 
 # Fade onboarding
 
-Walk the person through setting up Fade one step at a time, the way a good agency onboards a new
-client: ask only what you cannot find out, show what Fade found, and stop when they want to stop.
+Walk the person through setting up Fade one step at a time, as a good agency onboards a client:
+ask only what you cannot find out, show what Fade found, stop when they want to.
 Every step is optional after step 2; a person can make an ad with an empty Brand folder, it is
 just less on-brand.
 
@@ -94,8 +94,8 @@ Confirm in one line: "Setting up <brand> in <workspace>."
 Ask for the brand's website if you do not know it. Then `fade_brand {fromSite: "acme.com"}` and
 poll `fade_brand {siteRun}` until it is `done` or `failed`.
 
-Fade opens the site in a browser, measures its palette by painted area, its typefaces, name and
-tagline, and files the logo, a screenshot, a few pictures and a `site.md` under `site/<host>/`.
+Fade measures the site's palette (by painted area), typefaces, name and tagline, and files the
+logo, a screenshot, a few pictures and a `site.md` under `site/<host>/`.
 Tell the person which files were filed. The measured colours and typefaces are drawn on the Brand
 page (`page` in the answer); send them there to check it looks like them. Over MCP you only see
 each file's one-line reading, so never state a colour or a font you have not seen in an answer.
@@ -149,10 +149,10 @@ end or next time. Rename and delete are on the Brand page.
 
 ### 6. Build the brand kit (may spend; ask first)
 
-The kit is the onboarding binder an agency team would get on day one: canon (name, one-liner),
-look, voice, products, claims with sources, rules and compliance, audiences, past ads, market.
-Fade's kit session builds it from the Brand folder and public sources, writes each layer into the
-folder as a draft, and asks only what only the brand can answer.
+The kit is an agency's day-one binder: canon, look, voice, products, claims with sources, rules
+and compliance, audiences, past ads, market. Fade's kit session builds it from the Brand folder
+and public sources, writes each layer into the folder as a draft, and asks only what only the
+brand can answer.
 
 Tell the person it may buy public research (page text, ad libraries, reviews, search volume)
 inside a small capped budget per kit, and that it says what it spent. On their yes:
@@ -161,10 +161,10 @@ inside a small capped budget per kit, and that it says what it spent. On their y
 fade_chat {text: "Build this workspace's brand kit from <site>", skill: "brand-research"}
 ```
 
-Relay its progress and questions; answer questions with `fade_answer` using the person's own
-words (rights to faces, fonts and music, which claims are cleared, real ad results). If research
-is unavailable, the session still drafts the kit from the folder and the site read. Follow up
-with `fade_status {sessionId, after: lastSeq}` while it says it is still working.
+Relay its progress and questions; answer with `fade_answer` in the person's own words (rights
+to faces, fonts and music, cleared claims, real ad results). Without research it still drafts
+from the folder and the site read. Follow up with `fade_status {sessionId, after: lastSeq}` while
+it is working.
 
 ### 7. Approve the kit
 
@@ -191,8 +191,7 @@ say they can send one now:
 - From their own video: "Remake this video for <product>", with the file or a link to it.
 - From scratch: "Make a 15-second vertical ad for <product> that <goal>".
 
-Tell them Fade shows a storyboard and its price before anything costly runs, and that nothing is
-paid until they approve it.
+Fade shows a storyboard and its price first; nothing is paid until they approve it.
 
 ### Optional: their own Google key
 
@@ -222,10 +221,9 @@ read and to guide:
     Brand page has a Build the kit button yet: say "if your Brand page shows Build the kit, press
     it; otherwise ask your agent connected to the Fade MCP to build the kit (step 6)". Its drafts
     are approved on the Brand page by clearing each draft's `draft (inferred)` note.
-- This chat keeps the Brand folder as it read it at its start. When they say they added, labelled
-  or removed files, call `brand_folder {refresh: true}` to see the folder as it is now, then say
-  what changed and what is next. If `brand_folder` says the folder has changed since this chat
-  read it, refresh before you answer; never tell them an upload failed without refreshing first.
+- This chat keeps the folder it read at its start. When they say they changed it, or
+  `brand_folder` says it changed, call `brand_folder {refresh: true}`, then say what changed and
+  what is next. Never say an upload failed without refreshing first.
 - End with step 8: the prompts to start an ad, not an ad.
 - Say your answer so it reaches the person: put it in `finish`'s `summary`, or answer with no
   tool call at all. Text written beside a tool call in the same turn is not shown to them.
