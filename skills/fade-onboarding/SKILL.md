@@ -7,7 +7,7 @@ description: >-
   a first ad. Use when someone says "set up Fade", "onboard me", "connect my brand to Fade", "add a
   new client to Fade", or when Fade's tools answer with an empty workspace or an empty Brand folder.
 kind: craft
-version: 5
+version: 6
 ---
 
 # Fade onboarding
@@ -53,9 +53,9 @@ Before starting, find out where they are: if the Fade tools are connected, call 
 `fade_workspace` and `fade_brand` (all free) and tick what is already done. Resume from the first
 open step; never redo a finished one.
 
-**This is version 5 of this skill.** Once per conversation, call `fade_list {limit: 1}` (free): its
+**This is version 6 of this skill.** Once per conversation, call `fade_list {limit: 1}` (free): its
 `skills` list names Fade's own `fade-onboarding` with its `version`. If that number is higher than
-5, tell the person once, in one line, that a newer onboarding skill is out and they can update it
+6, tell the person once, in one line, that a newer onboarding skill is out and they can update it
 with `npx skills update -g`, then carry on with this one. Never update it yourself. (Inside the
 Fade app you already play Fade's own version: skip this check.)
 
@@ -222,7 +222,10 @@ read and to guide:
     Brand page has a Build the kit button yet: say "if your Brand page shows Build the kit, press
     it; otherwise ask your agent connected to the Fade MCP to build the kit (step 6)". Its drafts
     are approved on the Brand page by clearing each draft's `draft (inferred)` note.
-- When they come back, read the folder again and say what changed and what is next.
+- This chat keeps the Brand folder as it read it at its start. When they say they added, labelled
+  or removed files, call `brand_folder {refresh: true}` to see the folder as it is now, then say
+  what changed and what is next. If `brand_folder` says the folder has changed since this chat
+  read it, refresh before you answer; never tell them an upload failed without refreshing first.
 - End with step 8: the prompts to start an ad, not an ad.
 - Say your answer so it reaches the person: put it in `finish`'s `summary`, or answer with no
   tool call at all. Text written beside a tool call in the same turn is not shown to them.
