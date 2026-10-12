@@ -7,7 +7,7 @@ description: >-
   a first ad. Use when someone says "set up Fade", "onboard me", "connect my brand to Fade", "add a
   new client to Fade", or when Fade's tools answer with an empty workspace or an empty Brand folder.
 kind: craft
-version: 1
+version: 2
 ---
 
 # Fade onboarding
@@ -203,14 +203,19 @@ read and to guide:
 - Find out where the person is with `brand_folder` (what is in the folder, its labels, its
   readings) and tick the checklist from that. Steps 1 and 2 are done: they are signed in, in this
   workspace.
-- For each open step, say in one or two lines what to do and where, then wait:
+- You cannot do any of these steps in this chat, so never offer to: no "I'll label them", no
+  "reply build the kit and I'll start it", no "once they're in, I'll …". For each open step, say
+  in one or two lines what the person does and where, then wait. The pages are under
+  `https://app.tryfade.ai/<workspace id>/` (`brand`, `members`, `settings`); name the full address
+  when you know the workspace id, else the page by name.
   - website read: the Brand page's From website field;
   - files: drop them on the Brand page;
   - labels, renames and deletes: on each file's row on the Brand page;
   - teammates: the Members page; their own Google key: Settings;
-  - the kit: built in its own chat with the skill `brand-research`, from Build the kit on the
-    Brand page where it is shown, else from their agent over the Fade MCP (step 6). Its drafts are
-    approved on the Brand page by clearing each draft's `draft (inferred)` note.
+  - the kit: built in its own chat with the skill `brand-research`, not in this one. Not every
+    Brand page has a Build the kit button yet: say "if your Brand page shows Build the kit, press
+    it; otherwise ask your agent connected to the Fade MCP to build the kit (step 6)". Its drafts
+    are approved on the Brand page by clearing each draft's `draft (inferred)` note.
 - When they come back, read the folder again and say what changed and what is next.
 - End with step 8: the prompts to start an ad, not an ad.
 
