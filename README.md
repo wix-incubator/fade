@@ -60,3 +60,5 @@ and add a row to the table above.
 
 When you change a skill, raise `version` in its frontmatter, and in `fade-onboarding` the
 version named in its body too (the update check reads that one).
+Keep the body (everything after the frontmatter) under 12,000 characters: Fade refuses a
+longer skill on upload.
