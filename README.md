@@ -7,6 +7,24 @@ other agents.
 The skills drive Fade through its MCP server (`https://mcp.tryfade.ai/mcp`, sign in with a Wix
 account); [connect.md](skills/fade-onboarding/references/connect.md) has the setup for each app.
 
+## The Fade plugin: the connection and its commands
+
+`plugins/fade/` is one plugin with Fade's connection (`https://mcp.tryfade.ai/mcp`) and its
+commands: `ad`, `remake`, `brand`, `projects`, `status` and `onboarding`. This repo is its
+marketplace, so the apps follow it and update it themselves.
+
+| App | Add it | Commands |
+| --- | --- | --- |
+| Claude, Cowork, Claude Desktop | Customize → Plugins → Add → Add marketplace → `wix-incubator/fade`, add **Fade**, then connect it and sign in with Wix | `/fade:ad`, `/fade:onboarding`, … |
+| Claude Code | `claude plugin marketplace add wix-incubator/fade && claude plugin install fade@fade` | `/fade:ad`, `/fade:onboarding`, … |
+| Codex | `codex plugin marketplace add wix-incubator/fade && codex plugin add fade@fade` | `$fade:ad`, … |
+
+A plugin added to a Claude account is also in Cowork and Claude Code under that account.
+
+The command files under `plugins/fade/skills/` are generated from imaxx's `@wix/fade-workflows`
+(the same text Fade's server sends as MCP prompts); change them there and regenerate, not here.
+`onboarding` calls the server's `fade_onboarding`, so it always plays Fade's current guide.
+
 ## Skills
 
 | Skill | What it does |

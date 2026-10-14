@@ -1,0 +1,13 @@
+{
+  "name": "fade",
+  "owner": {
+    "name": "Wix"
+  },
+  "plugins": [
+    {
+      "name": "fade",
+      "source": "./plugins/fade",
+      "description": "Make and remake video ads with Fade: your Brand folder, projects and priced plans, from your AI app."
+    }
+  ]
+}
