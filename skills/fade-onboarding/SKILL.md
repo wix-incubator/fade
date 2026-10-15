@@ -64,6 +64,9 @@ If no `fade_*` tools are available, the Fade MCP is not connected. Its address i
 `https://mcp.tryfade.ai/mcp` (remote, OAuth sign-in with a Wix account). Give the person the one
 command or setting for their app from [references/connect.md](references/connect.md); in a
 terminal agent you may run the command yourself, then they sign in in the browser.
+If Fade is connected but not signed in, the app offers Fade's authenticate tool instead: call it
+and, if you can run shell commands, open the link it returns in the person's browser yourself
+(`open` on macOS, `xdg-open` on Linux, `start` on Windows); otherwise give them the link.
 
 Then call `fade_whoami`:
 
