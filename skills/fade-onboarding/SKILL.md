@@ -7,7 +7,7 @@ description: >-
   a first ad. Use when someone says "set up Fade", "onboard me", "connect my brand to Fade", "add a
   new client to Fade", or when Fade's tools answer with an empty workspace or an empty Brand folder.
 kind: craft
-version: 6
+version: 7
 ---
 
 # Fade onboarding
@@ -17,8 +17,7 @@ ask only what you cannot find out, show what Fade found, stop when they want to.
 Every step is optional after step 2; a person can make an ad with an empty Brand folder, it is
 just less on-brand.
 
-Onboarding ends with the brand set up. It never starts an ad: it ends by showing the person how to
-start one themselves (step 8).
+Onboarding never starts an ad: it ends by showing the person how to start one (step 8).
 
 The flow runs through the Fade MCP (the `fade_*` tools). If you are Fade's own agent, in a chat in
 the Fade app, read [Inside the Fade app](#inside-the-fade-app) first.
@@ -53,11 +52,11 @@ Before starting, find out where they are: if the Fade tools are connected, call 
 `fade_workspace` and `fade_brand` (all free) and tick what is already done. Resume from the first
 open step; never redo a finished one.
 
-**This is version 6 of this skill.** Once per conversation, call `fade_list {limit: 1}` (free): its
+**This is version 7 of this skill.** Once per conversation, call `fade_list {limit: 1}` (free): its
 `skills` list names Fade's own `fade-onboarding` with its `version`. If that number is higher than
-6, tell the person once, in one line, that a newer onboarding skill is out and they can update it
-with `npx skills update -g`, then carry on with this one. Never update it yourself. (Inside the
-Fade app you already play Fade's own version: skip this check.)
+7, tell the person once, in one line, that a newer onboarding skill is out and they can update it
+with `npx skills update -g`, then carry on with this one. Never update it yourself. (Skip this
+check inside the Fade app.)
 
 ### 1. Connect and sign in
 
@@ -100,8 +99,10 @@ Tell the person which files were filed. The measured colours and typefaces are d
 page (`page` in the answer); send them there to check it looks like them. Over MCP you only see
 each file's one-line reading, so never state a colour or a font you have not seen in an answer.
 A site behind a login or a cookie wall reads only what it drew; say so.
+A read failed with `blocked: "bot-check"` met a bot check and filed nothing: say so, do not
+retry, and offer step 6 now, whose page readers often get through.
 
-Start step 4 while the site is read; you do not have to wait for it.
+Start step 4 while the site is read; no need to wait for it.
 
 ### 4. Add the brand's own files
 
