@@ -7,7 +7,7 @@ description: >-
   a first ad. Use when someone says "set up Fade", "onboard me", "connect my brand to Fade", "add a
   new client to Fade", or when Fade's tools answer with an empty workspace or an empty Brand folder.
 kind: craft
-version: 7
+version: 8
 ---
 
 # Fade onboarding
@@ -52,9 +52,9 @@ Before starting, find out where they are: if the Fade tools are connected, call 
 `fade_workspace` and `fade_brand` (all free) and tick what is already done. Resume from the first
 open step; never redo a finished one.
 
-**This is version 7 of this skill.** Once per conversation, call `fade_list {limit: 1}` (free): its
+**This is version 8 of this skill.** Once per conversation, call `fade_list {limit: 1}` (free): its
 `skills` list names Fade's own `fade-onboarding` with its `version`. If that number is higher than
-7, tell the person once, in one line, that a newer onboarding skill is out and they can update it
+8, tell the person once, in one line, that a newer onboarding skill is out and they can update it
 with `npx skills update -g`, then carry on with this one. Never update it yourself. (Skip this
 check inside the Fade app.)
 
