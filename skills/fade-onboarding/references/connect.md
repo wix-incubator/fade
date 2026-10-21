@@ -11,6 +11,13 @@ account) in the browser; no key or token is pasted anywhere.
 | Claude Desktop / claude.ai | Settings → Connectors → Add custom connector → URL `https://mcp.tryfade.ai/mcp` → Connect                                                          |
 | Any other MCP host         | Add a Streamable HTTP server with that URL; the host's OAuth flow opens the sign-in                                                                |
 
+In Codex, run `codex mcp login fade` yourself: it opens the browser for the Wix sign-in, then the
+person restarts Codex.
+
+If Fade is connected but not signed in, the app offers Fade's authenticate tool: call it and, if you
+can run shell commands, open the link it returns in the person's browser yourself (`open` on macOS,
+`xdg-open` on Linux, `start` on Windows); otherwise give them the link.
+
 After connecting, the app may need a restart or a new chat before the `fade_*` tools appear.
 Check with `fade_whoami`.
 
