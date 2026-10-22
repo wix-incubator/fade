@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136 136" role="img" aria-label="Fade video frames"><title>Fade — compact matched frames</title><defs></defs><g><defs><linearGradient id="frameShade" x1="0" y1="18" x2="0" y2="118" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF70B7"/><stop offset=".28" stop-color="#FA53AA"/><stop offset=".62" stop-color="#ED2A93"/><stop offset="1" stop-color="#D72180"/></linearGradient><filter id="frameRelief" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+<feGaussianBlur in="SourceAlpha" stdDeviation="0.35" result="soft"/>
+<feOffset in="soft" dy="0.55" result="down"/>
+<feComposite in="SourceAlpha" in2="down" operator="out" result="topEdge"/>
+<feFlood flood-color="#FFF1F6" flood-opacity=".50" result="light"/>
+<feComposite in="light" in2="topEdge" operator="in" result="highlight"/>
+<feOffset in="soft" dy="-0.55" result="up"/>
+<feComposite in="SourceAlpha" in2="up" operator="out" result="bottomEdge"/>
+<feFlood flood-color="#9E123F" flood-opacity=".26" result="shade"/>
+<feComposite in="shade" in2="bottomEdge" operator="in" result="edgeShade"/>
+<feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="edgeShade"/><feMergeNode in="highlight"/></feMerge>
+</filter></defs><defs>
+<linearGradient id="foldShade" x1="0" y1="18" x2="0" y2="118" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF70B7"/><stop offset=".28" stop-color="#FA53AA"/><stop offset=".62" stop-color="#ED2A93"/><stop offset="1" stop-color="#D72180"/></linearGradient>
+
+
+<mask id="foldClearance" maskUnits="userSpaceOnUse" x="0" y="0" width="136" height="136" style="mask-type:luminance"><rect width="136" height="136" fill="white"/><path d="M76 49C76 53 74 57 69 60L59 67C51 73 46 80 46 90" fill="none" stroke="black" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M90 48V55C90 66 82 73 72 80L67 84" fill="none" stroke="black" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></mask>
+</defs><g mask="url(#foldClearance)"><path fill="url(#frameShade)" filter="url(#frameRelief)" fill-rule="evenodd" d="M23 30.2L81 18.6Q90 16.8 90 25.8V61.8Q90 70.8 81 72.6L23 84.2Q14 86 14 77V41Q14 32 23 30.2Z M28 43.2V69.2L76 59.6V33.6Z"/><g><path fill="url(#frameShade)" filter="url(#frameRelief)" fill-rule="evenodd" d="M76 59.6L113 52.2Q122 50.4 122 59.4V95.4Q122 104.4 113 106.2L55 117.8Q46 119.6 46 110.6V90C46 80 51 73 59 67L69 60L76 59.6Z M60 76.8V102.8L108 93.2V67.2Z"/></g></g><path fill="url(#foldShade)" d="M76 33.6L90 30.8V55C90 66 82 73 72 80L67 84C62 88 60 92 60 98V116.8L55 117.8Q46 119.6 46 110.6V90C46 80 51 73 59 67L69 60C74 57 76 53 76 49Z"/></g></svg>

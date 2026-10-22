@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "fade",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Make and remake video ads with Fade: your Brand folder, projects and priced plans, from your AI app.",
   "author": {
     "name": "Wix"
@@ -15,7 +15,8 @@
         "shortDescription": "Make and remake video ads with Fade",
         "developerName": "Wix",
         "composerIcon": "./assets/icon.png",
-        "logo": "./assets/icon.png"
+        "logo": "./assets/icon.png",
+        "logoDark": "./assets/icon-dark.png"
       }
     }
   }
