@@ -21,6 +21,8 @@ marketplace, so the apps follow it and update it themselves.
 
 A plugin added to a Claude account is also in Cowork and Claude Code under that account.
 
+The plugin always carries Fade's icon (`plugins/fade/assets/icon.png`, with `icon.svg` beside it): the Claude manifest's `icon`, the portable manifest's Codex `composerIcon`/`logo` and the `.codex-plugin` manifest name it. A listing without it shows a blank tile — never remove it. (Fade installed by address alone gets the same mark from the MCP server itself.)
+
 The command files under `plugins/fade/skills/` are generated from imaxx's `@wix/fade-workflows`
 (the same text Fade's server sends as MCP prompts); change them there and regenerate, not here.
 `onboarding` calls the server's `fade_onboarding`, so it always plays Fade's current guide.
