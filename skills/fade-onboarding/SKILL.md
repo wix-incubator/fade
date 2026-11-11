@@ -7,7 +7,7 @@ description: >-
   a first ad. Use when someone says "set up Fade", "onboard me", "connect my brand to Fade", "add a
   new client to Fade", or when Fade's tools answer with an empty workspace or an empty Brand folder.
 kind: craft
-version: 8
+version: 9
 ---
 
 # Fade onboarding
@@ -17,25 +17,27 @@ ask only what you cannot find out, show what Fade found, stop when they want to.
 Every step is optional after step 2; a person can make an ad with an empty Brand folder, it is
 just less on-brand.
 
-Onboarding never starts an ad: it ends by showing the person how to start one (step 8).
+If the person picks `instant-ad` (making an ad right now from their own media and prompt without
+setting up a brand kit first), follow `start.options` (`fade_upload` + `fade_chat {withoutBrand: true}`)
+immediately. When running the brand-kit flow below, end by showing step 8's starter prompts rather
+than launching an unasked ad.
 
-The flow runs through the Fade MCP (the `fade_*` tools). If you are Fade's own agent, in a chat in
-the Fade app, read [Inside the Fade app](#inside-the-fade-app) first.
+The flow runs through the Fade MCP (the `fade_*` tools). If you are Fade's own agent in the Fade
+web app, read [Inside the Fade app](#inside-the-fade-app) first.
 
-**House rules for the whole flow**
+**House rules**
 
-- Relay Fade's words; do not invent what Fade found. Fade's answers are the source of truth.
-- A result with `accepted: false` is Fade declining for the reason it gives. Tell the person, do
-  what it suggests, never retry it unchanged.
-- Say where work lands before making anything: every answer carries `workspace`.
-- Free steps run without asking. Anything that spends (research, a render) is stated with its
-  price first and runs only on the person's explicit yes.
-- Never ask for, paste or pass an API key or password in chat. Fade sends links for that.
+- Relay Fade's words; never invent what Fade found.
+- A result with `accepted: false` is Fade declining for the reason given: tell the person, follow
+  its suggestion, never retry unchanged.
+- State where work lands before making anything (`workspace` on every answer).
+- Free steps run without asking. Paid steps state their price first and run only on explicit yes.
+- Never ask for, paste or pass an API key or password in chat.
 - Keep each message short: one question, or one result and the next step.
 
 ## The flow
 
-Track progress with this checklist and show it when the person asks where they are:
+Track progress with this checklist and show it when asked:
 
 ```
 - [ ] 1. Connected and signed in
@@ -48,190 +50,141 @@ Track progress with this checklist and show it when the person asks where they a
 - [ ] 8. Ready for a first ad
 ```
 
-Before starting, find out where they are: if the Fade tools are connected, call `fade_whoami`,
-`fade_workspace` and `fade_brand` (all free) and tick what is already done. Resume from the first
-open step; never redo a finished one.
+Before starting, inspect `currentState` on `fade_onboarding`'s answer (if present), or call
+`fade_whoami`, `fade_workspace` and `fade_brand` (all free). If the person already started a
+website scan (`activeSiteRun`) or kit research (`webWizard.researchSessionId`) in the web Welcome
+wizard, resume those IDs (`fade_brand {siteRun}` and `fade_status {sessionId}`) instead of asking
+for their URL again or starting duplicates.
 
-**This is version 8 of this skill.** Once per conversation, call `fade_list {limit: 1}` (free): its
-`skills` list names Fade's own `fade-onboarding` with its `version`. If that number is higher than
-8, tell the person once, in one line, that a newer onboarding skill is out and they can update it
-with `npx skills update -g`, then carry on with this one. Never update it yourself. (Skip this
-check inside the Fade app.)
+**This is version 9 of this skill.** Once per conversation (skip inside the Fade app or when
+`fade_onboarding` served this text directly), call `fade_list {limit: 1}` (free): if
+`fade-onboarding`'s `version` is higher than 9, mention once that they can run
+`npx skills update -g`, then continue.
 
 ### 1. Connect and sign in
 
-If no `fade_*` tools are available, the Fade MCP is not connected. Its address is
-`https://mcp.tryfade.ai/mcp` (remote, OAuth sign-in with a Wix account). Give the person the one
-command or setting for their app from [references/connect.md](references/connect.md); in a
-terminal agent you may run the command yourself, then they sign in in the browser.
+If no `fade_*` tools are available, give the setup for their app from
+[references/connect.md](references/connect.md); in a terminal agent you may run the plugin install
+yourself, then they sign in in the browser.
 
-Then call `fade_whoami`:
+Call `fade_whoami` (or check `currentState.allowlisted`):
 
-- `allowlisted: false` → Fade is in early access and this account is not invited yet. Tell them to
-  ask for access at https://www.tryfade.ai and stop here.
+- `allowlisted: false` → Fade is in early access and this account is not on the invite list yet.
+  Signing in at https://app.tryfade.ai notifies the Fade team in Slack automatically; tell them so
+  and stop here.
 - Otherwise say who they are signed in as and continue.
 
 ### 2. The workspace for the brand
 
-**One brand = one workspace.** The Brand folder belongs to the workspace, and every ad made there
-reads it. An agency makes one workspace per client.
+**One brand = one workspace.** Every ad made in a workspace reads its Brand folder; agencies make
+one workspace per client.
 
-1. `fade_workspace` (no arguments) lists their workspaces with the current one marked.
-2. Ask which brand this is for. If a workspace for it exists, switch:
-   `fade_workspace {workspaceId}`.
-3. A brand with no workspace yet (a client, a company) gets a new one:
-   `fade_workspace {newWorkspace: "<brand name>"}` makes it, owned by the person, and switches to
-   it. Say the name you will use before you make it. Their personal workspace is fine for one
-   brand of their own. (On the web: workspace switcher → new workspace.)
-4. Teammates are invited on the workspace's Members page:
-   `https://app.tryfade.ai/<workspaceId>/members`. Offer it once; do not push.
+1. `fade_workspace` lists their workspaces (`recommendedWorkspaceId` marks a shared team workspace
+   they joined while Personal has no work).
+2. If they joined a shared team workspace that already has an approved Brand folder and no personal
+   work, switch to it (`fade_workspace {workspaceId}`) and jump to step 8 unless they asked to set
+   up another brand.
+3. For a brand with no workspace yet, confirm the name and call
+   `fade_workspace {newWorkspace: "<brand name>"}`. Note that new shared workspaces start at
+   `$0.00` usage until an admin adds a plan or top-up (`Personal` includes the monthly Hobby
+   allowance). (Web: account menu → workspace switcher → **Create a workspace**.)
+4. Teammates are invited at `https://app.tryfade.ai/<workspaceId>/members`. Offer once; do not push.
 
 Confirm in one line: "Setting up <brand> in <workspace>."
 
-### 3. Read the brand's website (free, about a minute)
+### 3. Read the brand's website (free, ~1 minute)
 
-Ask for the brand's website if you do not know it. Then `fade_brand {fromSite: "acme.com"}` and
-poll `fade_brand {siteRun}` until it is `done` or `failed`.
+If `currentState.activeSiteRun` is running, poll `fade_brand {siteRun: "<runId>"}`. If
+`currentState.brandFolder.siteHost` is already present, skip to step 4. Otherwise ask for the
+website, call `fade_brand {fromSite: "acme.com"}`, and poll `fade_brand {siteRun}` until `done` or
+`failed`.
 
-Fade measures the site's palette (by painted area), typefaces, name and tagline, and files the
-logo, a screenshot, a few pictures and a `site.md` under `site/<host>/`.
-Tell the person which files were filed. The measured colours and typefaces are drawn on the Brand
-page (`page` in the answer); send them there to check it looks like them. Over MCP you only see
-each file's one-line reading, so never state a colour or a font you have not seen in an answer.
-A site behind a login or a cookie wall reads only what it drew; say so.
-A read failed with `blocked: "bot-check"` met a bot check and filed nothing: say so, do not
-retry, and offer step 6 now, whose page readers often get through.
-
-Start step 4 while the site is read; no need to wait for it.
+Fade measures palette, typefaces, name and tagline (`look` in the answer) and files the logo,
+screenshot, pictures and `site.md` under `site/<host>/`. Share what was measured and filed plus
+`https://app.tryfade.ai/<workspaceId>/brand` to verify visually. If `blocked: "bot-check"`, do not
+retry; offer step 6 instead. Start step 4 without waiting.
 
 ### 4. Add the brand's own files
 
-What the brand declares outranks what Fade measured from the site, so ask for what they have,
-in this order of value:
+Declared assets outrank site measurements. Ask in order of value:
 
-1. Logos (SVG or PNG; a version for dark backgrounds if they have one)
+1. Logos (SVG/PNG; plus an `on-dark` variant if available)
 2. Product photos, by product
-3. Brand guidelines / brand book, research, briefs (PDF, MD, TXT; Word/PowerPoint: ask for a PDF
-   export, those are kept but not read yet)
-4. Old ads, especially the ones that performed best, and their numbers
-5. Fonts, sounds or a sonic logo, with their licences
+3. Brand guidelines, research, briefs (PDF, MD, TXT)
+4. Best-performing old ads and their metrics
+5. Licensed fonts, sounds or sonic logos
 
-How to send them:
+How to send:
 
-- **They point you at a folder on this machine** → `fade_import` with `onDone: "brand"`, an
-  `include` list you curate (each with `role`, `product`, `note`) and an `exclude` for what you
-  left out and why. Run its `shell.plan`, show the output, and on their OK run `shell.upload`.
-  Send only this brand's files; never secrets, contracts with personal data, or other brands'
-  assets.
-- **No shell** (desktop or phone chat) → give them the import's `uploadPage`, or the Brand page
-  `https://app.tryfade.ai/<workspaceId>/brand`, where they drag and drop.
+- **Local folder with shell access** → `fade_import` (`onDone: "brand"`, curated `include` with
+  `role`/`product`/`note`, `exclude` with reasons). Run `shell.plan`, confirm with the user, then
+  run `shell.upload`. Never upload secrets, personal-data contracts or other brands' files.
+- **No shell** → share `uploadPage` or `https://app.tryfade.ai/<workspaceId>/brand` for drag-and-drop.
 
-Files are read on arrival, which takes a few minutes for a batch. `fade_brand` shows each one's
-one-line reading (`reading: "pending"` while it reads). Do not sleep or poll in a loop for it:
-carry on, and look again when you need a reading (step 5).
+Readings arrive asynchronously (`reading: "pending"`). Carry on without polling in a loop.
 
 ### 5. Label what matters
 
-Call `fade_brand` and look at roles. Labels are optional, but Fade trusts them over its own guess,
-so set the few that change an ad, in one `fade_brand {label: [...]}` call:
+Call `fade_brand`, propose key labels from paths/readings, and apply on their OK via
+`fade_brand {label: [...]}`:
 
-- the primary logo (`role: "logo", use: "primary"`) and the one for dark backgrounds
-  (`use: "on-dark"`);
-- each product's photos (`role: "product-photo", product: "<name>"`);
-- the best old ad (`role: "old-ad", note: "best performer, CTR 2.1%"`).
+- primary logo (`role: "logo", use: "primary"`) and dark-ground logo (`use: "on-dark"`); if they
+  uploaded their own logo, clear `use: ""` on the site-scanned logo so only theirs stays `primary`;
+- product photos (`role: "product-photo", product: "<name>"`);
+- top old ad (`role: "old-ad", note: "best performer, CTR 2.1%"`).
 
-Keep one primary logo. The site read labels its logo `primary`, so when the person also uploads
-one, theirs wins (the brand's own file outranks a reading of its site): clear `use` on the other
-with `use: ""`. A placeholder or test file never keeps `primary`.
+### 6. Build the brand kit
 
-Propose the labels from the paths and readings, and set them once the person agrees. A picture
-whose reading is still pending is labelled later: say which ones are left and pick them up at the
-end or next time. Rename and delete are on the Brand page.
+Fade's `brand-research` session drafts canon (`BRAND.md`), look, voice, products, sourced claims,
+compliance rules, audiences and market inside a capped `$0.50` research budget Fade covers (`$0.00`
+from workspace usage).
 
-### 6. Build the brand kit (may spend; ask first)
-
-The kit is an agency's day-one binder: canon, look, voice, products, claims with sources, rules
-and compliance, audiences, past ads, market. Fade's kit session builds it from the Brand folder
-and public sources, writes each layer into the folder as a draft, and asks only what only the
-brand can answer.
-
-Tell the person it may buy public research (page text, ad libraries, reviews, search volume)
-inside a small capped budget per kit, and that it says what it spent. On their yes:
+If `currentState.webWizard.researchSessionId` exists, check `fade_status {sessionId}` instead of
+starting another. Otherwise, on their yes:
 
 ```
 fade_chat {text: "Build this workspace's brand kit from <site>", skill: "brand-research"}
 ```
 
-Relay its progress and questions; answer with `fade_answer` in the person's own words (rights
-to faces, fonts and music, cleared claims, real ad results). Without research it still drafts
-from the folder and the site read. Follow up with `fade_status {sessionId, after: lastSeq}` while
-it is working.
+Relay progress and questions (`fade_answer`), following with `fade_status {sessionId, after: lastSeq}`.
 
 ### 7. Approve the kit
 
-Nothing a kit session drafted reaches an ad until the person approves it. Drafts carry the note
-`draft (inferred)`. Ask them to read `BRAND.md` (the kit's one-page canon, which names the file
-behind every line) and the drafts, on the Brand page or with you.
-
-When they approve a file, clear its draft note: `fade_brand {label: [{path, note: ""}]}`. Only on
-their explicit say-so per file or for the whole kit ("approve the kit"); "looks fine" about one
-line is not approval of the kit. Edits they want go back to the kit session in `fade_chat` with
-its `sessionId`.
-
-The kit is **ready** when it has canon, look, voice, one product with its claims, and, for a
-regulated category (finance, health, people search, alcohol, gambling), its compliance rules.
+Drafts carry `note: "draft (inferred)"` and are ignored by ads until approved. Ask them to review
+`BRAND.md` and the drafts on **Brands** (where **Approve all** clears all draft notes) or with you.
+On explicit approval, clear notes via `fade_brand {label: [{path, note: ""}]}`; send requested
+edits back to `fade_chat {sessionId}`.
 
 ### 8. Ready for a first ad
 
-Onboarding never starts an ad, even when the person asks for one in the same message: do not call
-`fade_find_ads`, `fade_use_ad`, `fade_upload` or `fade_chat` to make one. Show them how to start
-it instead, with prompts they can send as they are, filled in with their brand and product, and
-say they can send one now:
+Give three ready-to-send prompts filled with their brand and product:
 
 - Remake a real ad: "Find <competitor or brand> ads on Meta and remake one for <product>".
-- From their own video: "Remake this video for <product>", with the file or a link to it.
+- From their own video: "Remake this video for <product>", with the file or a link.
 - From scratch: "Make a 15-second vertical ad for <product> that <goal>".
 
-Fade shows a storyboard and its price first; nothing is paid until they approve it.
+Fade asks on a `$0` plan first, draws preview stills under a small preview allowance, and quotes
+the video render before any video, voice or music is spent.
 
-### Optional: their own Google key
+### Optional: Google AI Studio key
 
-`fade_settings` says whether the workspace uses its own Google AI Studio key and gives the
-settings link. Mention it only if they ask about billing or limits. Send the link, never take the
-key in chat.
+If they ask about billing or limits, check `fade_settings` and share the settings link (never take
+a key in chat).
 
 ## Inside the Fade app
 
-When this skill plays in a chat in the Fade app (app.tryfade.ai), you are Fade's own agent: you
-have no `fade_*` tools, and you **never change the Brand folder or the workspace**. Your part is to
-read and to guide:
+In a chat on `app.tryfade.ai`, you have no `fade_*` tools and **never modify the Brand folder or
+workspace yourself**:
 
-- Find out where the person is with `brand_folder` (what is in the folder, its labels, its
-  readings) and tick the checklist from that. Steps 1 and 2 are done: they are signed in, in this
-  workspace.
-- You cannot do any of these steps in this chat, so never offer to: no "I'll label them", no
-  "reply build the kit and I'll start it", no "once they're in, I'll …". For each open step, say
-  in one or two lines what the person does and where, then wait. Name each page as the app's
-  sidebar does: **Brand kit** (the Brand page), **Members**, **Settings**. Never write an address
-  with a placeholder in it, like `<workspace id>`.
-  - website read: the Brand page's From website field;
-  - files: drop them on the Brand page;
-  - labels, renames and deletes: on each file's row on the Brand page;
-  - teammates: the Members page; their own Google key: Settings;
-  - the kit: built in its own chat with the skill `brand-research`, not in this one. Not every
-    Brand page has a Build the kit button yet: say "if your Brand page shows Build the kit, press
-    it; otherwise ask your agent connected to the Fade MCP to build the kit (step 6)". Its drafts
-    are approved on the Brand page by clearing each draft's `draft (inferred)` note.
-- This chat keeps the folder it read at its start. When they say they changed it, or
-  `brand_folder` says it changed, call `brand_folder {refresh: true}`, then say what changed and
-  what is next. Never say an upload failed without refreshing first.
-- End with step 8: the prompts to start an ad, not an ad.
-- Say your answer so it reaches the person: put it in `finish`'s `summary`, or answer with no
-  tool call at all. Text written beside a tool call in the same turn is not shown to them.
+- Call `brand_folder` (and `brand_folder {refresh: true}` after user edits) to check progress;
+  steps 1–2 are already done.
+- Guide in one or two lines per open step using exact UI names: **Brands** in the sidebar (page
+  title **Brand kit**), **Brands → From website**, **Brands → Build the kit**, **Approve all** on
+  the kit drafts banner, and **Account menu → Workspace settings** (for **Manage members** and
+  Google key). Never write placeholder URLs like `<workspace id>`.
+- End with step 8's prompts inside `finish`'s `summary` (or a plain reply with no tool call).
 
 ## Finishing
 
-End with the checklist, what is in the Brand folder, the workspace link
-`https://app.tryfade.ai/<workspaceId>`, and step 8's prompts, even when onboarding stopped before
-the kit (an ad can be made with the folder as it is). If they stopped early, say which step to
-pick up next time; this skill resumes from it.
+Close with the checklist, what is in the Brand folder, `https://app.tryfade.ai/<workspaceId>`, and
+step 8's prompts (or the next open step if they paused early).
