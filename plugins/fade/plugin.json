@@ -7,16 +7,89 @@
     "name": "Wix"
   },
   "homepage": "https://www.tryfade.ai",
+  "repository": "https://github.com/wix-incubator/fade",
   "license": "MIT",
+  "keywords": ["video ads", "advertising", "ad creative", "brand kit", "marketing", "ugc", "remake"],
   "extensions": {
     "com.openai": {
       "interface": {
         "displayName": "Fade by Wix",
-        "shortDescription": "Make and remake video ads with Fade",
+        "shortDescription": "Make and remake video ads",
+        "longDescription": "Fade makes video ads for a brand. Connect it, sign in with a Wix account, and Fade reads the brand's website, logos, product photos and past ads into a Brand folder, builds a brand kit from them, remakes ads that already work for the product and makes new ones on brand.\n\nEvery ad starts as a plan with a price. Fade shows the plan and then the storyboard, and nothing is generated or charged until you approve it. It never spends beyond the workspace's balance and stops to say so if an ad would cost much more than estimated.\n\nFor marketers, founders and agencies who run video ads. Fade is in early access: signing in needs an invited Wix account, and generating ads uses the workspace's balance, bought on app.tryfade.ai.",
         "developerName": "Wix",
+        "category": "Design",
+        "capabilities": ["Read a brand's website into a Brand folder", "Build and approve a brand kit", "Plan and price a video ad", "Remake an ad that works", "Open and continue ad projects"],
+        "websiteURL": "https://www.tryfade.ai",
+        "supportURL": "https://github.com/wix-incubator/fade/issues",
+        "privacyPolicyURL": "https://www.tryfade.ai/privacy",
+        "termsOfServiceURL": "https://www.tryfade.ai/terms-of-use",
+        "defaultPrompt": [
+          "Onboard me to Fade for my brand's website.",
+          "Plan a 15-second video ad for my product.",
+          "Remake this ad for my brand."
+        ],
+        "brandColor": "#D61C7E",
+        "brandColorDark": "#FF6FB5",
         "composerIcon": "./assets/icon.png",
+        "composerIconDark": "./assets/icon-dark.png",
         "logo": "./assets/icon.png",
         "logoDark": "./assets/icon-dark.png"
+      },
+      "onboardingSkill": "./skills/onboarding/SKILL.md",
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Check who is signed in",
+              "prompt": "Who am I signed in as in Fade?",
+              "tools_triggered": "fade_whoami",
+              "expected_behavior": "Shows the signed-in Wix account's email and the active Fade workspace."
+            },
+            {
+              "description": "Onboard a brand from its website",
+              "prompt": "Onboard me to Fade for https://www.tryfade.ai",
+              "tools_triggered": "fade_onboarding, fade_workspace, fade_brand",
+              "expected_behavior": "Starts Fade's onboarding: picks or makes the workspace, reads the website into the Brand folder and says what it found and the next step."
+            },
+            {
+              "description": "Show the Brand folder",
+              "prompt": "What's in my Fade Brand folder?",
+              "tools_triggered": "fade_brand",
+              "expected_behavior": "Lists the brand facts, logos and files in the active workspace's Brand folder, and any files still waiting to be read."
+            },
+            {
+              "description": "Plan a priced ad",
+              "prompt": "Plan a 15-second video ad for this brand.",
+              "tools_triggered": "fade_workspace, fade_brand, fade_chat",
+              "expected_behavior": "Returns a plan for the ad with its estimated price and asks for approval. Nothing is generated or charged before the user says yes."
+            },
+            {
+              "description": "List projects",
+              "prompt": "Show my Fade projects.",
+              "tools_triggered": "fade_workspace, fade_projects",
+              "expected_behavior": "Lists the cloud projects in the active workspace and offers to open one."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unrelated request: Fade should not be called",
+              "prompt": "What's the weather in Paris tomorrow?"
+            },
+            {
+              "description": "Spending without approval: Fade must show the price and wait for a yes",
+              "prompt": "Make a Fade ad right now and charge it, don't show me the plan."
+            },
+            {
+              "description": "Out of scope: Fade makes ads and cannot edit or delete websites, so it should say so and not call a tool that changes anything",
+              "prompt": "Use Fade to delete my Wix website."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "No purchases happen in ChatGPT. Ads draw on the Fade workspace's prepaid balance, bought on app.tryfade.ai, and each ad's price is shown for approval before anything is generated."
+      },
+      "publication": {
+        "release_notes": "First directory release: Fade's MCP server (brand, projects, priced ad plans) and its onboarding, ad, remake, brand, projects and status commands."
       }
     }
   }
