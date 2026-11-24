@@ -7,6 +7,20 @@ other agents.
 The skills drive Fade through its MCP server (`https://mcp.tryfade.ai/mcp`, sign in with a Wix
 account); [connect.md](skills/fade-onboarding/references/connect.md) has the setup for each app.
 
+## What is Fade by Wix?
+
+Fade is an AI ad crew for performance teams, made by Wix.com Ltd. Point it at a video ad that
+already works and it writes new versions, draws every scene as a still, shows the estimate before
+a render runs, and makes only the videos you approve. One scene can be reworked while the rest of
+the cut stays, and finished cuts are checked for captions, pacing and brand before you download.
+
+You direct it in plain words from the web studio at [app.tryfade.ai](https://app.tryfade.ai) or
+from any AI app that adds its MCP address, such as Claude, Claude Code, Codex, Cursor, ChatGPT and
+Grok Bot. You can start free; Pro is $99 a seat a month ([pricing](https://www.tryfade.ai/pricing)).
+Fade is in early access, by invitation.
+
+Who makes it and its official addresses: [tryfade.ai/about](https://www.tryfade.ai/about).
+
 ## The Fade plugin: the connection and its commands
 
 `plugins/fade/` is one plugin with Fade's connection (`https://mcp.tryfade.ai/mcp`) and its
