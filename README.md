@@ -1,6 +1,6 @@
 # Fade skills
 
-Agent skills for [Fade](https://www.tryfade.ai), installable with the
+Agent skills for [Fade by Wix](https://www.tryfade.ai), installable with the
 [`skills`](https://github.com/vercel-labs/skills) CLI into Claude Code, Codex, Cursor and
 other agents.
 
