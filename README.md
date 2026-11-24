@@ -37,7 +37,9 @@ A plugin added to a Claude account is also in Cowork and Claude Code under that 
 
 The plugin always carries Fade's icon (`plugins/fade/assets/icon.png`, with `icon.svg` beside it): the Claude manifest's `icon`, the portable manifest's Codex `composerIcon`/`logo` and the `.codex-plugin` manifest name it. A listing without it shows a blank tile — never remove it. (Fade installed by address alone gets the same mark from the MCP server itself.)
 
-`plugins/fade/assets/logo.png` (512×512, with `logo.svg` beside it) is the same mark on Fade's dark plate, for directories that want an opaque square logo by URL (xAI's marketplace form, cursor.directory): link `https://raw.githubusercontent.com/wix-incubator/fade/master/plugins/fade/assets/logo.png`.
+`plugins/fade/assets/icon-plate.png` (512×512, with `icon-plate.svg` beside it) is the same mark on Fade's dark plate, for directories that want an opaque square icon (xAI's marketplace form, cursor.directory). By URL: `https://raw.githubusercontent.com/wix-incubator/fade/master/plugins/fade/assets/icon-plate.png`. When a form uploads the file, upload it as `fade-by-wix-icon.png`.
+
+`plugins/fade/assets/logo.png` is a temporary copy of `icon-plate.png`: the xAI plugin submission of 2026-11-24 links to it. Delete it once xAI has reviewed that submission.
 
 The command files under `plugins/fade/skills/` are generated from imaxx's `@wix/fade-workflows`
 (the same text Fade's server sends as MCP prompts); change them there and regenerate, not here.
