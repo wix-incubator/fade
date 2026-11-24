@@ -15,7 +15,7 @@
       "interface": {
         "displayName": "Fade by Wix",
         "shortDescription": "Make and remake video ads",
-        "longDescription": "Fade makes video ads for a brand. Connect it, sign in with a Wix account, and Fade reads the brand's website, logos, product photos and past ads into a Brand folder, builds a brand kit from them, remakes ads that already work for the product and makes new ones on brand.\n\nEvery ad starts as a plan with a price. Fade shows the plan and then the storyboard, and nothing is generated or charged until you approve it. It never spends beyond the workspace's balance and stops to say so if an ad would cost much more than estimated.\n\nFor marketers, founders and agencies who run video ads. Fade is in early access: signing in needs an invited Wix account, and generating ads uses the workspace's balance, bought on app.tryfade.ai.",
+        "longDescription": "Fade makes video ads for a brand. Connect it, sign in with a Wix account, and Fade reads the brand's website, logos, product photos and past ads into a Brand folder, builds a brand kit from them, remakes ads that already work for the product and makes new ones on brand.\n\nA new ad starts as a plan with its price, then a storyboard, and Fade waits for your yes before it makes the video. It never spends beyond the workspace's balance and stops to say so if an ad would cost much more than estimated.\n\nFor marketers, founders and agencies who run video ads. Fade is in early access: signing in needs an invited Wix account, and generating ads uses the workspace's balance, bought on app.tryfade.ai.",
         "developerName": "Wix",
         "category": "Design",
         "capabilities": ["Read a brand's website into a Brand folder", "Build and approve a brand kit", "Plan and price a video ad", "Remake an ad that works", "Open and continue ad projects"],
@@ -61,7 +61,7 @@
               "description": "Plan a priced ad",
               "prompt": "Plan a 15-second video ad for this brand.",
               "tools_triggered": "fade_workspace, fade_brand, fade_chat",
-              "expected_behavior": "Returns a plan for the ad with its estimated price and asks for approval. Nothing is generated or charged before the user says yes."
+              "expected_behavior": "Returns a plan for the ad with its estimated price and asks for approval; the video is not made before the user says yes."
             },
             {
               "description": "List projects",
@@ -86,7 +86,7 @@
           ]
         },
         "commerce": false,
-        "commerce_description": "No purchases happen in ChatGPT. Ads draw on the Fade workspace's prepaid balance, bought on app.tryfade.ai, and each ad's price is shown for approval before anything is generated."
+        "commerce_description": "No purchases happen in ChatGPT. Ads draw on the Fade workspace's prepaid balance, bought on app.tryfade.ai, and a new ad's price is shown for approval before the video is made."
       },
       "publication": {
         "release_notes": "First directory release: Fade's MCP server (brand, projects, priced ad plans) and its onboarding, ad, remake, brand, projects and status commands."
