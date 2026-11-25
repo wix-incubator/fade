@@ -1,12 +1,18 @@
 {
   "name": "fade",
-  "version": "1.0.7",
+  "displayName": "Fade by Wix",
+  "version": "1.0.8",
   "description": "Make and remake video ads with Fade: your Brand folder, projects and priced plans, from your AI app.",
   "author": {
     "name": "Wix"
   },
   "homepage": "https://www.tryfade.ai",
+  "repository": "https://github.com/wix-incubator/fade",
+  "documentationUrl": "https://mcp.tryfade.ai/llms.txt",
+  "supportUrl": "https://github.com/wix-incubator/fade/issues",
   "privacyPolicyUrl": "https://www.tryfade.ai/privacy",
+  "termsOfServiceUrl": "https://www.tryfade.ai/terms-of-use",
+  "keywords": ["video ads", "advertising", "ad creative", "brand kit", "marketing", "remake"],
   "license": "MIT",
   "icon": "./assets/icon.png"
 }
