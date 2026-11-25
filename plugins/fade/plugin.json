@@ -46,10 +46,10 @@
               "expected_behavior": "Shows the signed-in Wix account's email and the active Fade workspace."
             },
             {
-              "description": "Onboard a brand from its website",
-              "prompt": "Onboard me to Fade for https://www.tryfade.ai",
-              "tools_triggered": "fade_onboarding, fade_workspace, fade_brand",
-              "expected_behavior": "Starts Fade's onboarding: picks or makes the workspace, reads the website into the Brand folder and says what it found and the next step."
+              "description": "Start onboarding",
+              "prompt": "Onboard me to Fade.",
+              "tools_triggered": "fade_onboarding",
+              "expected_behavior": "Returns Fade's onboarding guide and asks how to start: set up the brand kit first, or make an ad now from the person's own media."
             },
             {
               "description": "Show the Brand folder",
