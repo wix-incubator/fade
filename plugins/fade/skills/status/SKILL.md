@@ -6,7 +6,7 @@ user-invocable: true
 argument-hint: "[request]"
 ---
 
-Check Fade status
+# Check Fade status
 
 Use the current Fade tool catalog and its input schemas. If Fade is signed out or not connected, sign the person in first. In Codex, run `codex mcp login fade` yourself (it opens the browser for the Wix sign-in), then tell them to restart Codex. Elsewhere, if Fade offers an authenticate tool, call it; if you can run shell commands, open the link it returns in the person's browser yourself (open on macOS, xdg-open on Linux, start on Windows) and tell them to finish signing in with Wix there, otherwise give them the link. Without either, tell them to connect https://mcp.tryfade.ai/mcp and sign in with Wix.
 
@@ -20,4 +20,4 @@ For an existing sessionId, call fade_status and report its current position, com
 
 Report versions and capabilities only when a tool returned them. If the host does not expose installed client metadata, say that the client version is unavailable rather than guessing.
 
-User request: $ARGUMENTS
+The person's request is what they wrote with this command, else their latest message. If there is none, ask what they want to do.

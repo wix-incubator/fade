@@ -41,8 +41,12 @@ The plugin always carries Fade's icon (`plugins/fade/assets/icon.png`, with `ico
 
 `plugins/fade/assets/logo.png` is a temporary copy of `icon-plate.png`: the xAI plugin submission of 2026-11-24 links to it. Delete it once xAI has reviewed that submission.
 
-The command files under `plugins/fade/skills/` are generated from imaxx's `@wix/fade-workflows`
-(the same text Fade's server sends as MCP prompts); change them there and regenerate, not here.
+The command files under `plugins/fade/skills/` (each `SKILL.md`, and Codex's `agents/openai.yaml`
+that keeps a command person-run) are generated from imaxx's `@wix/fade-workflows`, the same text
+Fade's server sends as MCP prompts. Change them there, then run
+`yarn workspace @wix/fade-workflows plugin-commands <this checkout>` from imaxx and raise the
+plugin's version. They say the request in words, not `$ARGUMENTS`: only Claude Code replaces that
+token, and Codex and the other apps would hand the model the token itself.
 `onboarding` calls the server's `fade_onboarding`, so it always plays Fade's current guide.
 
 ## Skills
