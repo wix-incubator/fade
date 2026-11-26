@@ -1,0 +1,30 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ai.tryfade.www/fade",
+  "title": "Fade by Wix",
+  "description": "Make and remake video ads for your brand, with a priced plan and storyboard you approve first.",
+  "version": "1.0.1",
+  "websiteUrl": "https://www.tryfade.ai",
+  "repository": {
+    "url": "https://github.com/wix-incubator/fade",
+    "source": "github"
+  },
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/wix-incubator/fade/master/plugins/fade/assets/icon.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    },
+    {
+      "src": "https://mcp.tryfade.ai/icon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": ["any"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.tryfade.ai/mcp"
+    }
+  ]
+}

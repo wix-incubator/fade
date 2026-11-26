@@ -41,6 +41,8 @@ The plugin always carries Fade's icon (`plugins/fade/assets/icon.png`, with `ico
 
 `plugins/fade/assets/logo.png` is a temporary copy of `icon-plate.png`: the xAI plugin submission of 2026-11-24 links to it. Delete it once xAI has reviewed that submission.
 
+`server.json` is Fade's entry in the [official MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=ai.tryfade.www/fade), named `ai.tryfade.www/fade`: the registry checks that name against the key at `https://www.tryfade.ai/.well-known/mcp-registry-auth`. Directories that read the registry (Glama, PulseMCP and others) take Fade from there. A published version cannot change, so raise `version` with every edit, then publish it: `mcp-publisher login http --domain www.tryfade.ai --private-key-file <key>` and `mcp-publisher publish`. Whoever publishes holds the private key; it never enters this repo.
+
 The command files under `plugins/fade/skills/` (each `SKILL.md`, and Codex's `agents/openai.yaml`
 that keeps a command person-run) are generated from imaxx's `@wix/fade-workflows`, the same text
 Fade's server sends as MCP prompts. Change them there, then run
