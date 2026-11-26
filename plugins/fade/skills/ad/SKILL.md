@@ -6,7 +6,7 @@ user-invocable: true
 argument-hint: "[request]"
 ---
 
-Create an ad with Fade
+# Create an ad with Fade
 
 Use the current Fade tool catalog and its input schemas. If Fade is signed out or not connected, sign the person in first. In Codex, run `codex mcp login fade` yourself (it opens the browser for the Wix sign-in), then tell them to restart Codex. Elsewhere, if Fade offers an authenticate tool, call it; if you can run shell commands, open the link it returns in the person's browser yourself (open on macOS, xdg-open on Linux, start on Windows) and tell them to finish signing in with Wix there, otherwise give them the link. Without either, tell them to connect https://mcp.tryfade.ai/mcp and sign in with Wix.
 
@@ -22,4 +22,4 @@ Show the proposed ad plan and its quoted price. Call fade_approve only after the
 
 After approved work finishes, show the Fade review or export page returned by the tools. State what completed and what still needs the person's decision.
 
-User request: $ARGUMENTS
+The person's request is what they wrote with this command, else their latest message. If there is none, ask what they want to do.

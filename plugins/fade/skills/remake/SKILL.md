@@ -6,7 +6,7 @@ user-invocable: true
 argument-hint: "[request]"
 ---
 
-Remake an ad with Fade
+# Remake an ad with Fade
 
 Use the current Fade tool catalog and its input schemas. If Fade is signed out or not connected, sign the person in first. In Codex, run `codex mcp login fade` yourself (it opens the browser for the Wix sign-in), then tell them to restart Codex. Elsewhere, if Fade offers an authenticate tool, call it; if you can run shell commands, open the link it returns in the person's browser yourself (open on macOS, xdg-open on Linux, start on Windows) and tell them to finish signing in with Wix there, otherwise give them the link. Without either, tell them to connect https://mcp.tryfade.ai/mcp and sign in with Wix.
 
@@ -16,7 +16,7 @@ Use existing Fade tools for the work and preserve the sessionId, projectId, plan
 
 Read the active workspace's Brand folder with fade_brand before planning. Use its existing facts and assets. State which files are read, pending or unread, and ask only for missing facts needed for this ad. Do not invent claims, testimonials or product details.
 
-Use the reference link or file already supplied. If no reference was supplied, ask for one. Keep Instagram, TikTok and YouTube URLs intact and send them with the requested product to fade_chat; let Fade resolve and analyze the source through its supported intake flow.
+Use the reference link or file already supplied. If no reference was supplied, ask for one. Keep Instagram, LinkedIn, TikTok, X (Twitter) and YouTube URLs intact and send them with the requested product to fade_chat; let Fade resolve and analyze the source through its supported intake flow.
 
 Ask Fade for the source analysis and a new plan that adapts the hook, pacing, shot structure and on-screen text to the Brand facts. Follow any priced approval request before source retrieval or analysis. Preserve the existing session on retries; do not create duplicate projects.
 
@@ -26,4 +26,4 @@ Show the proposed ad plan and its quoted price. Call fade_approve only after the
 
 After approved work finishes, show the Fade review or export page returned by the tools. State what completed and what still needs the person's decision.
 
-User request: $ARGUMENTS
+The person's request is what they wrote with this command, else their latest message. If there is none, ask what they want to do.
