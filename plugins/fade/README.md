@@ -17,7 +17,7 @@ Fade makes video ads for a brand. This plugin connects your AI app to Fade and a
 
 Everything goes to Fade's own server at `mcp.tryfade.ai`, run by Wix. The plugin runs no local programs, scripts or hooks. When you use it, Fade receives what you ask for in the conversation, the files you add to your Brand folder, and the websites you ask it to read. For a new ad, Fade shows a plan with its price, then a storyboard, and waits for your approval before it makes the video.
 
-Fade is in early access: signing in needs an invited Wix account, and making videos uses your workspace's balance, bought at [app.tryfade.ai](https://app.tryfade.ai).
+Any Wix account can sign in. Making videos uses your workspace's balance: it starts with $10 of free usage, and more is bought at [app.tryfade.ai](https://app.tryfade.ai).
 
 ## Install
 
