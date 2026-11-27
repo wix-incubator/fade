@@ -16,8 +16,8 @@ the cut stays, and finished cuts are checked for captions, pacing and brand befo
 
 You direct it in plain words from the web studio at [app.tryfade.ai](https://app.tryfade.ai) or
 from any AI app that adds its MCP address, such as Claude, Claude Code, Codex, Cursor, ChatGPT and
-Grok Bot. You can start free; Pro is $99 a seat a month ([pricing](https://www.tryfade.ai/pricing)).
-Fade is in early access, by invitation.
+Grok Bot. Any Wix account can sign in. Fade starts free with $10 of usage; Pro starts at $39 a
+seat a month ([pricing](https://www.tryfade.ai/pricing)).
 
 Who makes it and its official addresses: [tryfade.ai/about](https://www.tryfade.ai/about).
 
